@@ -6,6 +6,7 @@ public class TestEncryptors {
     ArrayList<Encryptor> E = new ArrayList<Encryptor>();
     E.add(new Clear());
     E.add(new Caesar());
+    E.add(new Vigenere());
 
     // Get alg,psw,msg from user
     System.out.print("algorithm: ");
