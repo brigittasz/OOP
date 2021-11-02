@@ -1,54 +1,58 @@
+import java.util.*;
+
 public class Event{
-  private int recurrence;
-  private MyDate currentDate;
-  private String description;
-  private String type;
-
-  public Event(String recurrence, String type, String currentDate, String description){
-    this.recurrence = Integer.valueOf(recurrence);
-    this.type = type;
-    String[] dates = currentDate.split("/");
-    this.currentDate = MyDate.makeDate(Integer.valueOf(dates[2]),Integer.valueOf(dates[0]),Integer.valueOf(dates[1]));
-    this.description = description;
-
-  }
-
-  public MyDate getDate(){
-    return currentDate;
-  }
-
-  public void setNextDate(){
-    if(type.equals("months")){
-        currentDate.incMonth(recurrence);
-    } else {
-        currentDate.incDay(recurrence);
+    private int recurrence;
+    private MyDate currentDate;
+    private double probability;
+    private String description;
+    private String type;
+    private Random rand;
+  
+    //constructs event
+    public Event(String recurrence, String type, String currentDate, String probability, String description, Random rand){
+      this.recurrence = Integer.valueOf(recurrence);
+      this.type = type;
+      String[] dates = currentDate.split("/");
+      this.currentDate = MyDate.makeDate(Integer.valueOf(dates[2]),Integer.valueOf(dates[0]),Integer.valueOf(dates[1]));
+      this.description = description;
+      this.probability = Double.valueOf(probability);
+      this.rand = rand;
     }
-  }
 
-  public String toString(){
-    return recurrence + " " + type + " " + currentDate + " " + description;
-  }
-
-  public String getDescription(){
-    return description;
-  }
-
-  public boolean checkDate(MyDate date){
-    return date.getYear() == currentDate.getYear() && date.getMonth() == currentDate.getMonth() && date.getDay() == currentDate.getDay();
-  }
-
-  public static void main(String[] args){
-    Event event = new Event("2", "days", "1/7/2017", "Ta");
-    System.out.println(event.toString());
-    event.setNextDate();
-    System.out.println(event.toString());
-    Event event2 = new Event("1", "days", "8/12/2017", "Dum");
-    System.out.println(event2.toString());
-
-    MyDate date = MyDate.makeDate(2017, 1, 9);
-    if(event.checkDate(date)){
-        System.out.println("event "+event.getDescription()+" is happening today " + event.getDate());
+    //returns MyDate for current date 
+    public MyDate getDate(){
+      return currentDate;
     }
+          
+    //Sets next day of event occurrence
+    public void setNextDate(){
+      if(type.equals("months")){
+          currentDate.incMonth(recurrence);
+      } else {
+          currentDate.incDay(recurrence);
+      }
+    }
+  
+    //Returns string in the format Recurrence + Type + CurrentDate + Description
+    public String toString(){
+      return recurrence + " " + type + " " + currentDate + " " + probability + " " + description;
+    }
+  
+    //Returns string for Description
+    public String getDescription(){
+      return description;
+    }
+  
+    //returns whether event occurs on given date given probability
+    public boolean occursOn(MyDate date){
+      if(this.rand.nextDouble() < probability)
+        return date.getYear() == currentDate.getYear() && date.getMonth() == currentDate.getMonth() && date.getDay() == currentDate.getDay();
+      else
+        return false;
+    }
+  
+    public static void main(String[] args){
+      
+    }
+  
   }
-
-}
