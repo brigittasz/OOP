@@ -45,10 +45,13 @@ public class Event{
   
     //returns whether event occurs on given date given probability
     public boolean occursOn(MyDate date){
-      if(this.rand.nextDouble() < probability)
-        return date.getYear() == currentDate.getYear() && date.getMonth() == currentDate.getMonth() && date.getDay() == currentDate.getDay();
-      else
-        return false;
+      if(date.getYear() == currentDate.getYear() && date.getMonth() == currentDate.getMonth() && date.getDay() == currentDate.getDay() && probability == 1){
+        return true;
+      } else if (date.getYear() == currentDate.getYear() && date.getMonth() == currentDate.getMonth() && date.getDay() == currentDate.getDay()){
+        this.setNextDate();
+        return rand.nextDouble() < probability;
+      }
+      return false;
     }
   
     public static void main(String[] args){

@@ -4,7 +4,7 @@ import java.util.*;
 public class Lab07{
     public static void main(String[] args){
         //get 3 arguments
-        if(args.length != 3){
+        if(args.length < 2){
             System.out.println("usage: java Lab7 <infilename> <numDays> <numLines>");
             System.exit(0);
         }
